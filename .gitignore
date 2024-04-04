@@ -1,0 +1,17 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+
+# Ignore virtual environment #
+venv/
+
+# PyCharm #
+.idea/
+*.iml
+.idea_modules/
+*.ipr
+*.iws
