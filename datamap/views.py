@@ -2,7 +2,8 @@ import requests
 import json
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-from dbasik_client.forms import SubmitAPIForm
+from datamap.forms import SubmitAPIForm
+from datamap.models import Datamap, DatamapLine
 
 
 def home_view(request, *args, **kwargs):
@@ -29,6 +30,9 @@ def dbasik_api_view(request):
                     with open('/tmp/dm.json', 'r') as file:
                         # Load JSON data into a Python dictionary
                         data = json.load(file)
+                        dm = Datamap.objects.create(name=data["datamap"]["name"], description=data["datamap"]["description"])
+                        for line in data["datamap"]["datamap_lines"]:
+                            DatamapLine.objects.create(dm=dm, key=line["key"], sheet=line["sheet"], cellref=line["cellref"]) 
                         print(data)
                     messages.success(request, 'Data Map Created')
                     return redirect('dbasik_api')
