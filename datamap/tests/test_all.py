@@ -5,16 +5,19 @@ from django.urls import reverse, resolve
 from dbasik_client.settings import BASE_DIR
 from datamap.views import dbasik_api_view
 from datamap.forms import SubmitAPIForm
-from datamap.models import Datamap
+from datamap.models import Datamap, DatamapLine
 
 
 class TestModels(TestCase):
-    # def setup(self):
-    #     self.dm_model = Datamap.object.get_or_create()
+    def setUp(self):
+        self.dm = Datamap.objects.create(name="Test name", description="Test description")
 
     def test_create_object(self):
-        dn = Datamap.objects.create(name="Test name", description="Test description")
-        # self.assertEquals(self.dm_model.name, "Test name")
+        self.assertEquals(self.dm.name, "Test name")
+
+    def test_create_datamaplines(self):
+        dml = DatamapLine.objects.create(dm=self.dm, key="Key 1", sheet="Sheet 1", cellref="A10")
+        self.assertEquals(dml.key, "Key 1")
 
 
 class TestUrls(TestCase):
