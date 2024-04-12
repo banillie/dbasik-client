@@ -16,8 +16,8 @@ def dbasik_api_view(request):
         if form.is_valid():
             url = 'http://localhost:4000/v1/datamaps'
             data = {
-                'name': 'bobbins',
-                'description': 'This is a long description of the datamap.'
+                'name': form.cleaned_data['name'],
+                'description': form.cleaned_data['description'],
             }
             files = {
                 'file': form.cleaned_data['csv_file']

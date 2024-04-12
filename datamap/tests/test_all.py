@@ -40,7 +40,7 @@ class TestUrlsViews(TestCase):
         self.assertTemplateUsed(response, 'datamap_list.html')
 
 
-@skip("Failing test - not bothered at the moment")
+# @skip("Failing test - not bothered at the moment")
 class SubmitAPIFormTest(TestCase):
     def test_form_fields(self):
         form = SubmitAPIForm()
@@ -48,18 +48,19 @@ class SubmitAPIFormTest(TestCase):
 
     # not working
     def test_form_valid(self):
-        csv_file = open(os.path.join(BASE_DIR, "dbasik_client/tests/datamap.csv"), 'rb')
+        # csv_file = open(os.path.join(BASE_DIR, "datamap/tests/datamap.csv"), 'rb')
+        csv_file = "datamap/tests/datamap.csv"
         form_files = {
             'csv_file': csv_file,
         }
-        form_data = {}
-        # Instantiate the form with the form data
-        form = SubmitAPIForm(data=form_data, files=form_files)
+        # form_data = {}
+        form = SubmitAPIForm(
+            # data=form_data,
+            files=form_files
+        )
 
-        # Check if the form is valid
-        if not form.is_valid():
-            print(form.errors)
         self.assertTrue(form.is_valid())
+        # csv_file.close()
 
     # def test_form_invalid(self):
     #     form_data = {}

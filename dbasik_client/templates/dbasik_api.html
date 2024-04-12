@@ -1,33 +1,3 @@
-<style>
-    .success {
-        display: block;
-        background-color: #2fdc2f !important;
-        color: white;
-        font-weight: bold;
-        padding: 12px;
-        border: 1px solid black;
-        border-radius: 8px;
-        margin: 16px;
-    }
-    .warning {
-        display: block;
-        background-color: darkred !important;
-        color: white;
-        font-weight: bold;
-        padding: 12px;
-        border: 1px solid black;
-        border-radius: 8px;
-        margin: 16px;
-    }
-</style>
-{% if messages %}
-    {% for message in messages %}
-        <p class="{{ message.tags }} text-center">
-        {{ message }}
-    {% endfor %}
-</p>
-{% endif %}
-
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
