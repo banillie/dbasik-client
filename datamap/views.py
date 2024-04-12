@@ -33,9 +33,8 @@ def dbasik_api_view(request):
                         dm = Datamap.objects.create(name=data["datamap"]["name"], description=data["datamap"]["description"])
                         for line in data["datamap"]["datamap_lines"]:
                             DatamapLine.objects.create(dm=dm, key=line["key"], sheet=line["sheet"], cellref=line["cellref"]) 
-                        print(data)
                     messages.success(request, 'Data Map Created')
-                    return redirect('dbasik_api')
+                    return redirect('datamap-list')
                 else:
                     return render(
                         request,
@@ -49,3 +48,11 @@ def dbasik_api_view(request):
         form = SubmitAPIForm()
 
     return render(request, 'dbasik_api.html', {'form': form})
+
+
+def datamaps_list_view(request):
+    datamaps_list = Datamap.objects.all()
+    context = {
+        'datamaps_list': datamaps_list
+    }
+    return render(request, 'datamap_list.html', context)

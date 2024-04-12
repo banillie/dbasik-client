@@ -3,7 +3,7 @@ from unittest import skip
 from django.test import TestCase
 from django.urls import reverse, resolve
 from dbasik_client.settings import BASE_DIR
-from datamap.views import dbasik_api_view
+from datamap.views import dbasik_api_view, datamaps_list_view
 from datamap.forms import SubmitAPIForm
 from datamap.models import Datamap, DatamapLine
 
@@ -20,7 +20,7 @@ class TestModels(TestCase):
         self.assertEquals(dml.key, "Key 1")
 
 
-class TestUrls(TestCase):
+class TestUrlsViews(TestCase):
     def test_dbasik_api_url(self):
         url = reverse('dbasik_api')
         self.assertEquals(resolve(url).func, dbasik_api_view)
@@ -29,6 +29,15 @@ class TestUrls(TestCase):
         response = self.client.get(reverse('dbasik_api'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'dbasik_api.html')
+
+    def test_datamaps_url(self):
+        url = reverse('datamap-list')
+        self.assertEquals(resolve(url).func, datamaps_list_view)
+
+    def test_datamap_list_view(self):
+        response = self.client.get(reverse('datamap-list'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'datamap_list.html')
 
 
 @skip("Failing test - not bothered at the moment")

@@ -1,0 +1,16 @@
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    {% for instance in datamaps_list %}
+        <tbody>
+        <tr>
+            <td>{{ instance.name }}</td>
+            <td>{{ instance.description }}</td>
+        </tr>
+        </tbody>
+    {% endfor %}
+</table>
