@@ -39,7 +39,7 @@
     {% for instance in datamaps_list %}
         <tbody>
         <tr>
-            <td>{{ instance.name }}</td>
+            <td><a href='{% url 'datamap-detail' instance.pk %}'>{{ instance.name }}</a></td>
             <td>{{ instance.description }}</td>
         </tr>
         </tbody>

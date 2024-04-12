@@ -54,5 +54,15 @@ def datamaps_list_view(request):
     datamaps_list = Datamap.objects.all()
     context = {
         'datamaps_list': datamaps_list
+
     }
     return render(request, 'datamap_list.html', context)
+
+
+def datamap_detail_view(request, pk):
+    datamap = Datamap.objects.get(pk=pk)
+    datamap_lines = DatamapLine.objects.filter(dm=datamap)
+    context = {
+        "datamap_lines": datamap_lines
+    }
+    return render(request, 'datamap_detail.html', context)

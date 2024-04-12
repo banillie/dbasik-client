@@ -1,0 +1,18 @@
+<table>
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Sheet</th>
+        <th>Cell Ref</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for instance in datamap_lines %}
+        <tr>
+            <td>{{ instance.key }}</td>
+            <td>{{ instance.sheet }}</td>
+            <td>{{ instance.cellref }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
