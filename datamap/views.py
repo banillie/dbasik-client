@@ -2,7 +2,7 @@ import requests
 import json
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-from datamap.forms import SubmitAPIForm
+from datamap.forms import SubmitAPIForm, DatamapLineEditForm
 from datamap.models import Datamap, DatamapLine
 
 
@@ -30,9 +30,11 @@ def dbasik_api_view(request):
                     with open('/tmp/dm.json', 'r') as file:
                         # Load JSON data into a Python dictionary
                         data = json.load(file)
-                        dm = Datamap.objects.create(name=data["datamap"]["name"], description=data["datamap"]["description"])
+                        dm = Datamap.objects.create(name=data["datamap"]["name"],
+                                                    description=data["datamap"]["description"])
                         for line in data["datamap"]["datamap_lines"]:
-                            DatamapLine.objects.create(dm=dm, key=line["key"], sheet=line["sheet"], cellref=line["cellref"]) 
+                            DatamapLine.objects.create(dm=dm, key=line["key"], sheet=line["sheet"],
+                                                       cellref=line["cellref"])
                     messages.success(request, 'Data Map Created')
                     return redirect('datamap-list')
                 else:
@@ -66,3 +68,22 @@ def datamap_detail_view(request, pk):
         "datamap_lines": datamap_lines
     }
     return render(request, 'datamap_detail.html', context)
+
+
+def datamap_line_edit(request, pk):
+    datamap_line = DatamapLine.objects.get(pk=pk)
+    context = {
+        "datamap_line": datamap_line,
+    }
+    if request.method == "POST":
+        form = DatamapLineEditForm(request.POST, instance=datamap_line)
+        context["form"] = form
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Line in datamap changed')
+            return redirect('datamap-detail', pk=datamap_line.dm.pk)
+        else:
+            return render(request, 'datamap_line_edit.html', context)
+    else:
+        context["form"] = DatamapLineEditForm(instance=datamap_line)
+        return render(request, 'datamap_line_edit.html', context)

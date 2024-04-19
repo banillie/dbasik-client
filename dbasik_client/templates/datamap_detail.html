@@ -1,17 +1,51 @@
+<style>
+    .success {
+        display: block;
+        background-color: #2fdc2f !important;
+        color: white;
+        font-weight: bold;
+        padding: 12px;
+        border: 1px solid black;
+        border-radius: 8px;
+        margin: 16px;
+    }
+    .warning {
+        display: block;
+        background-color: darkred !important;
+        color: white;
+        font-weight: bold;
+        padding: 12px;
+        border: 1px solid black;
+        border-radius: 8px;
+        margin: 16px;
+    }
+</style>
+{% if messages %}
+    {% for message in messages %}
+        <p class="{{ message.tags }} text-center">
+        {{ message }}
+    {% endfor %}
+</p>
+{% endif %}
+
 <table>
     <thead>
     <tr>
         <th>Key</th>
         <th>Sheet</th>
         <th>Cell Ref</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    {% for instance in datamap_lines %}
+    {% for line in datamap_lines %}
         <tr>
-            <td>{{ instance.key }}</td>
-            <td>{{ instance.sheet }}</td>
-            <td>{{ instance.cellref }}</td>
+            <td>{{ line.key }}</td>
+            <td>{{ line.sheet }}</td>
+            <td>{{ line.cellref }}</td>
+            <td>
+                <a href={% url 'datamap-line-edit' line.pk %}>Edit</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
