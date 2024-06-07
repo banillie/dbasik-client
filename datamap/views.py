@@ -14,7 +14,7 @@ def dbasik_api_view(request):
     if request.method == 'POST':
         form = SubmitAPIForm(request.POST, request.FILES)
         if form.is_valid():
-            url = 'http://localhost:4000/v1/datamaps'
+            url = "http://localhost:5000/v1/datamap"
             data = {
                 'name': form.cleaned_data['name'],
                 'description': form.cleaned_data['description'],
