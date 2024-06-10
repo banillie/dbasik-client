@@ -33,6 +33,7 @@
     <tr>
         <th>Key</th>
         <th>Sheet</th>
+        <th>Type</th>
         <th>Cell Ref</th>
         <th></th>
     </tr>
@@ -42,6 +43,11 @@
         <tr>
             <td>{{ line.key }}</td>
             <td>{{ line.sheet }}</td>
+            {% if line.datatype %}
+                <td>{{ line.datatype }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
             <td>{{ line.cellref }}</td>
             <td>
                 <a href={% url 'datamap-line-edit' line.pk %}>Edit</a>
